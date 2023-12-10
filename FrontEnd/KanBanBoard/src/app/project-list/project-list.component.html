@@ -1,0 +1,8 @@
+<div *ngIf="!projects">
+    No Projects
+</div>
+<div *ngIf="projects">
+    <div *ngFor="let project of projects">
+        <app-project-list-card  [project]="project"></app-project-list-card>
+    </div>
+</div>
