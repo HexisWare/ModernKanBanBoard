@@ -44,5 +44,11 @@ testem.log
 .DS_Store
 Thumbs.db
 
-#Angular Cache
+# Angular Cache
 **/.angular/cache/
+
+# Keep Database folder but NOT contents
+# Ignore everything in the Database folder
+Database/*
+# But keep the folder itself
+!Database/.gitkeep

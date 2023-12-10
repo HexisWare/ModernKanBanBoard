@@ -10,7 +10,11 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-const db = new sqlite3.Database(':memory:', (err) => {
+const dbPath = '../Database/projecttasking.db';
+
+//in memory RAM tmep usage!
+//const db = new sqlite3.Database(':memory:', (err) => {
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     return console.error(err.message);
   }
