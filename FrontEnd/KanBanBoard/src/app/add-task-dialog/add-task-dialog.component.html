@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Add New Task</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="description">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Points</mat-label>
+    <input matInput [(ngModel)]="points">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Date</mat-label>
+    <input matInput [(ngModel)]="date">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>ProjectOf</mat-label>
+    <input matInput [(ngModel)]="projectOf">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>State</mat-label>
+    <p>Possible States: 'backlog' | 'ready to work' | 'in progress' | 'blocked' | 'in review' | 'done'</p>
+    <input matInput [(ngModel)]="state">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onSave()">Save</button>
+</mat-dialog-actions>

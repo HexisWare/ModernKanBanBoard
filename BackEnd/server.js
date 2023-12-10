@@ -19,7 +19,7 @@ const db = new sqlite3.Database(':memory:', (err) => {
 
 db.serialize(() => {
     db.run('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT)');
-    db.run('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name TEXT, description TEXT, points INTEGER, date TEXT, projectId INTEGER, FOREIGN KEY(projectId) REFERENCES projects(id))');
+    db.run('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name TEXT, description TEXT, points INTEGER, date TEXT, projectId INTEGER, state TEXT, FOREIGN KEY(projectId) REFERENCES projects(id))');
 
   
     // // Insert initial data (Optional)
@@ -51,10 +51,10 @@ db.serialize(() => {
   });
 
   app.post('/projects/:projectId/tasks', (req, res) => {
-    const { name, description, points, date } = req.body;
+    const { name, description, points, date, state } = req.body;
     const projectId = req.params.projectId;
   
-    db.run(`INSERT INTO tasks (name, description, points, date, projectId) VALUES (?, ?, ?, ?, ?)`, [name, description, points, date, projectId], function (err) {
+    db.run(`INSERT INTO tasks (name, description, points, date, projectId, state) VALUES (?, ?, ?, ?, ?, ?)`, [name, description, points, date, projectId, state], function (err) {
       if (err) {
         res.status(400).json({ error: err.message });
         return;

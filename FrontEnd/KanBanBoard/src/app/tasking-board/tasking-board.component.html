@@ -1,0 +1,48 @@
+<p>tasking-board works!</p>
+
+<button type="button" (click)="back()">
+    Back
+</button>
+
+<div class="columns-container">
+    <div class="column">
+        <h3>Ready To Work</h3>
+        <div *ngFor="let task of readyToWorkTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+    </div>
+    <div class="column">
+        <h3>In Progress</h3>
+        <div *ngFor="let task of inProgressTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+    </div>
+    <div class="column">
+        <h3>Blocked</h3>
+        <div *ngFor="let task of blockedTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+    </div>
+    <div class="column">
+        <h3>In Review</h3>
+        <div *ngFor="let task of inReviewTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+    </div>
+    <div class="column">
+        <h3>Done</h3>
+        <div *ngFor="let task of doneTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+    </div>
+</div>
+
+<div class="large-box">
+    <button mat-fab matTooltip="Primary" color="primary" aria-label="Example fab with a heart icon" (click)="addTask()">
+        <mat-icon>add</mat-icon>
+      </button>
+    <h3>Backlog</h3>
+        <div *ngFor="let task of backlogTasks">
+            <app-task-list-card  [task]="task"></app-task-list-card>
+        </div>
+  </div>

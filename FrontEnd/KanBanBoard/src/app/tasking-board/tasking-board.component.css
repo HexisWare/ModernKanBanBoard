@@ -1,0 +1,23 @@
+html, body { height: 100%; width: 100%; }
+
+.columns-container {
+    display: flex;
+    width: 100vw;
+    /* Add other styling as needed */
+  }
+  
+  .column {
+    flex: 1;
+    background-color: #c0c0c0; /* Slightly grey background */
+    border: 1px solid #d3d3d3; /* Light grey outline */
+    padding: 10px; /* Add padding */
+    margin: 5px; /* Optional: add some space between columns */
+    /* Add other styling as needed */
+  }
+  
+  .large-box {
+    /* Styling for the large box */
+    margin-top: 10px; /* Optional: add space above the large box */
+  }
+  
+  

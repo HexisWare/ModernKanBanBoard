@@ -18,6 +18,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TaskingBoardComponent } from './tasking-board/tasking-board.component';
+import { AppRoutingModule } from './app-routing.module';
+import { TaskListCardComponent } from './task-list-card/task-list-card.component';
+import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
+
 
 
 @NgModule({
@@ -31,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
@@ -42,7 +48,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TopBarComponent,
     ProjectListComponent,
     ProjectListCardComponent,
-    AddProjectDialogComponent
+    AddProjectDialogComponent,
+    TaskingBoardComponent,
+    TaskListCardComponent,
+    AddTaskDialogComponent
   ],
   bootstrap: [
     AppComponent

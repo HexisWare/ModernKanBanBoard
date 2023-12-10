@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from './projects'; // Adjust the import path
+import { Task } from './tasks';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
+  private baseUrl = 'http://localhost:3000';
   private apiUrl = 'http://localhost:3000/projects';
 
   constructor(private http: HttpClient) { }
@@ -17,10 +19,14 @@ export class ProjectService {
   }
 
   addProject(project: Project): Observable<Project> {
-    if (project) {
-      console.log("Project");
-      console.log(project);
-    }
     return this.http.post<Project>(this.apiUrl, project);
+  }
+
+  getTasksByProjectId(projectId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/projects/${projectId}/tasks`);
+  }
+
+  addTaskByprojectId(task: Task, projectId: number): Observable<Task> {
+    return this.http.post<Task>(`${this.baseUrl}/projects/${projectId}/tasks`, task);
   }
 }
