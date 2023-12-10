@@ -1,4 +1,5 @@
 export interface Task {
+    id: number;
     name: string;
     description: string;
     points: number;
@@ -10,6 +11,7 @@ export interface Task {
   //Placeholder if error
   export const tasks = [
     {
+      id: 1,
       name: 'Task 1',
       description: 'Do the 1 thing',
       points: 1,
@@ -18,6 +20,7 @@ export interface Task {
       state: 'backlog'
     },
     {
+      id: 2,
       name: 'Task 2',
       description: 'Do the 2 thing',
       points: 8,

@@ -22,6 +22,7 @@ import { TaskingBoardComponent } from './tasking-board/tasking-board.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TaskListCardComponent } from './task-list-card/task-list-card.component';
 import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -37,6 +38,7 @@ import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.compon
     MatFormFieldModule,
     MatInputModule,
     AppRoutingModule,
+    DragDropModule,
     FormsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([

@@ -4,45 +4,45 @@
     Back
 </button>
 
-<div class="columns-container">
-    <div class="column">
+<div class="columns-container" cdkDropListGroup>
+    <div class="column" id="readyToWorkTasks" cdkDropList [cdkDropListData]="readyToWorkTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
         <h3>Ready To Work</h3>
-        <div *ngFor="let task of readyToWorkTasks">
+        <div *ngFor="let task of readyToWorkTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
     </div>
-    <div class="column">
+    <div class="column" id="inProgressTasks" cdkDropList [cdkDropListData]="inProgressTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
         <h3>In Progress</h3>
-        <div *ngFor="let task of inProgressTasks">
+        <div *ngFor="let task of inProgressTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
     </div>
-    <div class="column">
+    <div class="column" id="blockedTasks" cdkDropList [cdkDropListData]="blockedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
         <h3>Blocked</h3>
-        <div *ngFor="let task of blockedTasks">
+        <div *ngFor="let task of blockedTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
     </div>
-    <div class="column">
+    <div class="column" id="inReviewTasks" cdkDropList [cdkDropListData]="inReviewTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
         <h3>In Review</h3>
-        <div *ngFor="let task of inReviewTasks">
+        <div *ngFor="let task of inReviewTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
     </div>
-    <div class="column">
+    <div class="column" id="doneTasks" cdkDropList [cdkDropListData]="doneTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
         <h3>Done</h3>
-        <div *ngFor="let task of doneTasks">
+        <div *ngFor="let task of doneTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
     </div>
 </div>
 
-<div class="large-box">
+<div class="large-box" id="backlogTasks" cdkDropList [cdkDropListData]="backlogTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
     <button mat-fab matTooltip="Primary" color="primary" aria-label="Example fab with a heart icon" (click)="addTask()">
         <mat-icon>add</mat-icon>
       </button>
     <h3>Backlog</h3>
-        <div *ngFor="let task of backlogTasks">
+        <div *ngFor="let task of backlogTasks" cdkDrag>
             <app-task-list-card  [task]="task"></app-task-list-card>
         </div>
   </div>

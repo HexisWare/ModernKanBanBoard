@@ -74,6 +74,27 @@ db.serialize(() => {
       res.json(rows);
     });
   });
+
+  app.patch('/tasks/:taskId/state', (req, res) => {
+    const taskId = req.params.taskId;
+    const newState = req.body.state; // Assuming the new state is sent in the request body
+
+    if (!newState) {
+        return res.status(400).json({ error: "New state is required" });
+    }
+
+    const sql = `UPDATE tasks SET state = ? WHERE id = ?`;
+    db.run(sql, [newState, taskId], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: "Task not found" });
+        }
+        res.json({ message: "Task state updated successfully", taskId: taskId, newState: newState });
+    });
+});
+
   
   
 

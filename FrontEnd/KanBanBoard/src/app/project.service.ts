@@ -26,7 +26,15 @@ export class ProjectService {
     return this.http.get<any[]>(`${this.baseUrl}/projects/${projectId}/tasks`);
   }
 
-  addTaskByprojectId(task: Task, projectId: number): Observable<Task> {
-    return this.http.post<Task>(`${this.baseUrl}/projects/${projectId}/tasks`, task);
+  addTaskByprojectId(task: any, projectId: number): Observable<Task> {
+    return this.http.post<any>(`${this.baseUrl}/projects/${projectId}/tasks`, task);
+  }
+
+  updateTaskState(taskId: number, newState: string): Observable<any> {
+    console.log("taskId");
+    console.log(taskId);
+    console.log("newState");
+    console.log(newState);
+    return this.http.patch(`${this.baseUrl}/tasks/${taskId}/state`, { state: newState });
   }
 }

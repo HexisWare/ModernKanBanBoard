@@ -5,6 +5,7 @@ import { tasks, Task } from '../tasks';
 import { ProjectService } from '../project.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from '../add-task-dialog/add-task-dialog.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasking-board',
@@ -31,6 +32,8 @@ export class TaskingBoardComponent {
   blockedTasks: Task[] = [];
   inReviewTasks: Task[] = [];
   doneTasks: Task[] = [];
+
+  allListIds = ['readyToWorkTasks', 'inProgressTasks', 'blockedTasks', 'inReviewTasks', 'doneTasks', 'backlogTasks'];
 
   ngOnInit() {
     this.projectService.getTasksByProjectId(this.projectId_['key']).subscribe(
@@ -78,6 +81,47 @@ export class TaskingBoardComponent {
         this.projectService.addProject(result.name);
       }
     });
+  }
+
+  drop(event: CdkDragDrop<Task[]>): void {
+    console.log('Dropped event: ', event);
+    
+    const previousContainerId = event.previousContainer.id;
+    const currentContainerId = event.container.id;
+  
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+  
+      // Assuming the container IDs match the state names
+      const task = event.container.data[event.currentIndex];
+      const newState = this.getStateFromContainerId(currentContainerId);
+  
+      // Update task state in backend
+      this.projectService.updateTaskState(task.id, newState).subscribe({
+        next: (response) => console.log('Task state updated', response),
+        error: (err) => console.error('Error updating task state', err)
+      });
+  
+      // Optionally, update task state locally for immediate UI reflection
+      task.state = newState;
+    }
+  }
+
+  private getStateFromContainerId(containerId: string): string {
+    const stateMap: { [key: string]: string } = {
+      'backlogTasks': 'backlog',
+      'inProgressTasks': 'in progress',
+      'readyToWorkTasks': 'ready to work',
+      'blockedTasks': 'blocked',
+      'inReviewTasks': 'in review',
+      'doneTasks': 'done'
+    };
+    return stateMap[containerId] || 'unknown';
   }
 
 }
