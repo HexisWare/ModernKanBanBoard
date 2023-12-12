@@ -67,6 +67,18 @@ db.serialize(() => {
     });
   });
 
+  app.delete('/:taskId/deletetask', (req, res) => {
+    const taskId = req.params.taskId;
+  
+    db.run('DELETE FROM tasks WHERE id = ?', [taskId], (err, rows) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.json(rows);
+    });
+  });
+
   app.get('/projects/:projectId/tasks', (req, res) => {
     const projectId = req.params.projectId;
   
