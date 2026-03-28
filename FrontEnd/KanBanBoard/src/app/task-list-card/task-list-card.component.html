@@ -14,4 +14,8 @@
     <mat-card-content>
         {{task.state}}
     </mat-card-content>
+
+    <button mat-fab matTooltip="Primary" color="primary" (click)="deleteTask(task.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
   </mat-card>

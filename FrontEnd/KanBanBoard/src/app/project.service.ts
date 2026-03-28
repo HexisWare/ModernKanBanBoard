@@ -30,11 +30,11 @@ export class ProjectService {
     return this.http.post<any>(`${this.baseUrl}/projects/${projectId}/tasks`, task);
   }
 
+  deleteTaskById(taskId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${taskId}/deletetask`);
+  }
+
   updateTaskState(taskId: number, newState: string): Observable<any> {
-    console.log("taskId");
-    console.log(taskId);
-    console.log("newState");
-    console.log(newState);
     return this.http.patch(`${this.baseUrl}/tasks/${taskId}/state`, { state: newState });
   }
 }
