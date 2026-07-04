@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: border-color 0.2s ease;
   padding: 6px 10px !important;
+  overflow: hidden;
 }
 
 .task-card:hover {
@@ -94,6 +95,14 @@
   background-color: #36b37e;
 }
 
+.state-prototype {
+  background-color: #ffab00;
+}
+
+.state-live {
+  background-color: #36b37e;
+}
+
 .task-priority-badge {
   display: inline-flex;
   align-items: center;
@@ -139,6 +148,9 @@
 .delete-btn {
   flex-shrink: 0;
   opacity: 0.5;
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 28px !important;
 }
 
 .delete-btn:hover {
@@ -150,6 +162,13 @@
   font-size: 18px !important;
   width: 18px !important;
   height: 18px !important;
+}
+
+.priority-btn {
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  flex-shrink: 0;
 }
 
 .priority-btn mat-icon {
@@ -166,10 +185,22 @@
   flex-shrink: 0;
 }
 
-.comments-section {
+.expanded-section {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid #30363d;
+}
+
+.task-description {
+  font-size: 12px;
+  color: #b1bac4;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background-color: #0d1117;
+  border-radius: 6px;
+  border: 1px solid #21262d;
 }
 
 .comments-header {

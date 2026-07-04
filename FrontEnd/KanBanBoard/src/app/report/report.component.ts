@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProjectService } from '../project.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class ReportComponent {
   reportData: any[] = [];
   loading: boolean = false;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private router: Router) {}
 
   ngOnInit() {
     this.loadReport();
@@ -54,5 +55,19 @@ export class ReportComponent {
   nextYear() {
     this.selectedYear++;
     this.loadReport();
+  }
+
+  getPriorityLabel(priority: number): string {
+    const labels = ['None', 'Lowest', 'Low', 'Medium', 'High', 'Highest'];
+    return labels[priority] || 'None';
+  }
+
+  getPriorityClass(priority: number): string {
+    const classes = ['priority-none', 'priority-lowest', 'priority-low', 'priority-medium', 'priority-high', 'priority-highest'];
+    return classes[priority] || 'priority-none';
+  }
+
+  navigateToBoard(projectId: number) {
+    this.router.navigate(['/tasking-board'], { state: { id: { key: projectId } } });
   }
 }

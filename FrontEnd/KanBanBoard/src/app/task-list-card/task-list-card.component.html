@@ -24,7 +24,8 @@
     <mat-icon class="expand-icon" *ngIf="expanded">expand_less</mat-icon>
   </div>
 
-  <div class="comments-section" *ngIf="expanded" (click)="$event.stopPropagation()">
+  <div class="expanded-section" *ngIf="expanded" (click)="$event.stopPropagation()">
+    <div class="task-description" *ngIf="task.description">{{ task.description }}</div>
     <div class="comments-header">Comments</div>
     <div *ngIf="loadingComments" class="comments-loading">Loading...</div>
     <div *ngIf="!loadingComments && comments.length === 0" class="no-comments">No comments yet</div>

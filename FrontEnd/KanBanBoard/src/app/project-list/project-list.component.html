@@ -35,5 +35,21 @@
         </app-project-list-card>
       </div>
     </div>
+
+    <!-- GameDev Boards Column -->
+    <div *ngIf="gameDevBoards.length > 0" class="board-column">
+      <h2 class="column-header">Games</h2>
+      <div *ngFor="let project of gameDevBoards; let i = index" class="project-card-wrapper">
+        <app-project-list-card
+          [project]="project"
+          [index]="i"
+          [total]="gameDevBoards.length"
+          (moveUp)="moveUpGameDev($event)"
+          (moveDown)="moveDownGameDev($event)"
+          (increasePriority)="increasePriority($event)"
+          (decreasePriority)="decreasePriority($event)">
+        </app-project-list-card>
+      </div>
+    </div>
   </div>
 </div>

@@ -20,8 +20,8 @@
       <mat-card-header>
         <mat-card-title>
           <b>{{ project.projectName }}</b>
-          <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'">
-            {{ project.boardType === 'content' ? 'Content Board' : 'Project Board' }}
+          <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'" [class.gamedev-badge]="project.boardType === 'gamedev'">
+            {{ project.boardType === 'content' ? 'Content' : (project.boardType === 'gamedev' ? 'GameDev' : 'Project') }}
           </span>
         </mat-card-title>
       </mat-card-header>
@@ -30,37 +30,49 @@
           <div class="quarter">
             <h3>Q1 (Jan-Mar)</h3>
             <div *ngIf="getTasksForQuarter(project, 1).length === 0" class="no-tasks">No tasks</div>
-            <div *ngFor="let task of getTasksForQuarter(project, 1)" class="report-task">
+            <div *ngFor="let task of getTasksForQuarter(project, 1)" class="report-task" (click)="navigateToBoard(project.projectId)">
               <span class="task-date">{{ task.doneDate }}</span>
-              <span class="task-name">{{ task.name }}</span>
-              <span class="task-points">{{ task.points }} pts</span>
+              <div class="task-row">
+                <span class="task-name">{{ task.name }}</span>
+                <span class="task-priority-badge {{ getPriorityClass(task.priority) }}">{{ getPriorityLabel(task.priority) }}</span>
+                <span class="task-points">{{ task.points }} pts</span>
+              </div>
             </div>
           </div>
           <div class="quarter">
             <h3>Q2 (Apr-Jun)</h3>
             <div *ngIf="getTasksForQuarter(project, 2).length === 0" class="no-tasks">No tasks</div>
-            <div *ngFor="let task of getTasksForQuarter(project, 2)" class="report-task">
+            <div *ngFor="let task of getTasksForQuarter(project, 2)" class="report-task" (click)="navigateToBoard(project.projectId)">
               <span class="task-date">{{ task.doneDate }}</span>
-              <span class="task-name">{{ task.name }}</span>
-              <span class="task-points">{{ task.points }} pts</span>
+              <div class="task-row">
+                <span class="task-name">{{ task.name }}</span>
+                <span class="task-priority-badge {{ getPriorityClass(task.priority) }}">{{ getPriorityLabel(task.priority) }}</span>
+                <span class="task-points">{{ task.points }} pts</span>
+              </div>
             </div>
           </div>
           <div class="quarter">
             <h3>Q3 (Jul-Sep)</h3>
             <div *ngIf="getTasksForQuarter(project, 3).length === 0" class="no-tasks">No tasks</div>
-            <div *ngFor="let task of getTasksForQuarter(project, 3)" class="report-task">
+            <div *ngFor="let task of getTasksForQuarter(project, 3)" class="report-task" (click)="navigateToBoard(project.projectId)">
               <span class="task-date">{{ task.doneDate }}</span>
-              <span class="task-name">{{ task.name }}</span>
-              <span class="task-points">{{ task.points }} pts</span>
+              <div class="task-row">
+                <span class="task-name">{{ task.name }}</span>
+                <span class="task-priority-badge {{ getPriorityClass(task.priority) }}">{{ getPriorityLabel(task.priority) }}</span>
+                <span class="task-points">{{ task.points }} pts</span>
+              </div>
             </div>
           </div>
           <div class="quarter">
             <h3>Q4 (Oct-Dec)</h3>
             <div *ngIf="getTasksForQuarter(project, 4).length === 0" class="no-tasks">No tasks</div>
-            <div *ngFor="let task of getTasksForQuarter(project, 4)" class="report-task">
+            <div *ngFor="let task of getTasksForQuarter(project, 4)" class="report-task" (click)="navigateToBoard(project.projectId)">
               <span class="task-date">{{ task.doneDate }}</span>
-              <span class="task-name">{{ task.name }}</span>
-              <span class="task-points">{{ task.points }} pts</span>
+              <div class="task-row">
+                <span class="task-name">{{ task.name }}</span>
+                <span class="task-priority-badge {{ getPriorityClass(task.priority) }}">{{ getPriorityLabel(task.priority) }}</span>
+                <span class="task-points">{{ task.points }} pts</span>
+              </div>
             </div>
           </div>
         </div>

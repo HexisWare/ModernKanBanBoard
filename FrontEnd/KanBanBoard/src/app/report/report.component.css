@@ -78,27 +78,70 @@
 }
 
 .report-task {
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  margin-bottom: 6px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
   background-color: #0d1117;
   border-radius: 6px;
   border-left: 3px solid #36b37e;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.report-task:hover {
+  background-color: #161b22;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .task-date {
-  font-size: 11px;
+  font-size: 10px;
   color: #6e7681;
+  display: block;
+  margin-bottom: 2px;
 }
 
 .task-name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #e8eaf0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-points {
   font-size: 11px;
   color: #58a6ff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.task-priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.priority-none { background-color: #484f58; }
+.priority-lowest { background-color: #36b37e; }
+.priority-low { background-color: #00b8d9; }
+.priority-medium { background-color: #ffab00; }
+.priority-high { background-color: #ff8b00; }
+.priority-highest { background-color: #de350b; }
+
+.gamedev-badge {
+  background-color: rgba(255, 171, 0, 0.15);
+  color: #ffab00;
+  border: 1px solid rgba(255, 171, 0, 0.3);
 }

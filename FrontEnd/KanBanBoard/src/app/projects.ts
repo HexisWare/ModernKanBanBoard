@@ -6,6 +6,9 @@ export interface Project {
     priority?: number;
     sortOrder?: number;
     ideas?: string;
+    gameDevDoc?: string;
+    prototypeLink?: string;
+    liveLink?: string;
   }
   
   //Placeholder if error

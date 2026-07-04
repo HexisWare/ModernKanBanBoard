@@ -4,8 +4,8 @@
     Back
   </button>
   <h2 class="board-title">{{ projectName }}</h2>
-  <span class="board-type-label" [class.content-label]="boardType === 'content'">
-    {{ boardType === 'content' ? 'Content Board' : 'Project Board' }}
+  <span class="board-type-label" [class.content-label]="boardType === 'content'" [class.gamedev-label]="boardType === 'gamedev'">
+    {{ boardType === 'content' ? 'Content Board' : (boardType === 'gamedev' ? 'GameDev Board' : 'Project Board') }}
   </span>
   <button mat-raised-button matTooltip="Import Tasks" (click)="importTasks()">
     <mat-icon>file_upload</mat-icon>
@@ -13,6 +13,91 @@
   </button>
 </div>
 
+<!-- Project Board Swimlanes -->
+<div *ngIf="boardType === 'project'" class="columns-container" cdkDropListGroup>
+  <div class="column" [class.empty-column]="readyToWorkTasks.length === 0" id="readyToWorkTasks" cdkDropList [cdkDropListData]="readyToWorkTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Ready To Work</h3>
+    <div *ngFor="let task of readyToWorkTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="inProgressTasks.length === 0" id="inProgressTasks" cdkDropList [cdkDropListData]="inProgressTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>In Progress</h3>
+    <div *ngFor="let task of inProgressTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="blockedTasks.length === 0" id="blockedTasks" cdkDropList [cdkDropListData]="blockedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Blocked</h3>
+    <div *ngFor="let task of blockedTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="inReviewTasks.length === 0" id="inReviewTasks" cdkDropList [cdkDropListData]="inReviewTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>In Review</h3>
+    <div *ngFor="let task of inReviewTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="doneTasks.length === 0" id="doneTasks" cdkDropList [cdkDropListData]="doneTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Done</h3>
+    <div *ngFor="let task of doneTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+</div>
+
+<!-- GameDev Board Swimlanes -->
+<div *ngIf="boardType === 'gamedev'" class="columns-container" cdkDropListGroup>
+  <div class="column" [class.empty-column]="readyToWorkTasks.length === 0" id="readyToWorkTasks" cdkDropList [cdkDropListData]="readyToWorkTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Ready To Work</h3>
+    <div *ngFor="let task of readyToWorkTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="inProgressTasks.length === 0" id="inProgressTasks" cdkDropList [cdkDropListData]="inProgressTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>In Progress</h3>
+    <div *ngFor="let task of inProgressTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="blockedTasks.length === 0" id="blockedTasks" cdkDropList [cdkDropListData]="blockedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Blocked</h3>
+    <div *ngFor="let task of blockedTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="inReviewTasks.length === 0" id="inReviewTasks" cdkDropList [cdkDropListData]="inReviewTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>In Review</h3>
+    <div *ngFor="let task of inReviewTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column" [class.empty-column]="doneTasks.length === 0" id="doneTasks" cdkDropList [cdkDropListData]="doneTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Done</h3>
+    <div *ngFor="let task of doneTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+</div>
+
+<!-- Content Board Swimlanes -->
+<div *ngIf="boardType === 'content'" class="columns-container content-board" cdkDropListGroup>
+  <div class="column content-column" [class.empty-column]="videoTasks.length === 0" id="videoTasks" cdkDropList [cdkDropListData]="videoTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Video</h3>
+    <div *ngFor="let task of videoTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+  <div class="column content-column" [class.empty-column]="uploadedTasks.length === 0" id="uploadedTasks" cdkDropList [cdkDropListData]="uploadedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+    <h3>Uploaded</h3>
+    <div *ngFor="let task of uploadedTasks" cdkDrag>
+      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    </div>
+  </div>
+</div>
+
+<!-- Ideas Section (below columns, above backlog) -->
 <div class="ideas-section">
   <div class="ideas-header">
     <mat-icon class="ideas-icon">lightbulb_outline</mat-icon>
@@ -21,63 +106,48 @@
   <textarea class="ideas-textarea" [(ngModel)]="ideas" (ngModelChange)="onIdeasChange()" placeholder="Jot down ideas, notes, bullet points..."></textarea>
 </div>
 
-<!-- Project Board Swimlanes -->
-<div *ngIf="boardType === 'project'" class="columns-container" cdkDropListGroup>
-  <div class="column" id="readyToWorkTasks" cdkDropList [cdkDropListData]="readyToWorkTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>Ready To Work</h3>
-    <div *ngFor="let task of readyToWorkTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+<!-- GameDev Extra Sections (doc upload + links) -->
+<div *ngIf="boardType === 'gamedev'" class="gamedev-section">
+  <div class="gamedev-doc-section">
+    <div class="ideas-header">
+      <mat-icon class="ideas-icon">description</mat-icon>
+      <span>GameDev Doc</span>
+    </div>
+    <div class="doc-upload-row" *ngIf="!gameDevDocName">
+      <input type="file" #docFileInput class="doc-file-input" (change)="onGameDevDocUpload($event)">
+      <button mat-raised-button color="primary" (click)="docFileInput.click()">
+        <mat-icon>upload_file</mat-icon>
+        Upload Doc
+      </button>
+    </div>
+    <div class="doc-uploaded-row" *ngIf="gameDevDocName">
+      <mat-icon class="doc-file-icon">insert_drive_file</mat-icon>
+      <span class="doc-file-name">{{ gameDevDocName }}</span>
+      <button mat-icon-button (click)="onGameDevDocRemove()">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
   </div>
-  <div class="column" id="inProgressTasks" cdkDropList [cdkDropListData]="inProgressTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>In Progress</h3>
-    <div *ngFor="let task of inProgressTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+  <div class="gamedev-links-row">
+    <div class="link-field">
+      <label>Prototype Published</label>
+      <input type="text" class="link-input" [(ngModel)]="prototypeLink" (ngModelChange)="onPrototypeLinkChange()" placeholder="https://...">
     </div>
-  </div>
-  <div class="column" id="blockedTasks" cdkDropList [cdkDropListData]="blockedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>Blocked</h3>
-    <div *ngFor="let task of blockedTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
-    </div>
-  </div>
-  <div class="column" id="inReviewTasks" cdkDropList [cdkDropListData]="inReviewTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>In Review</h3>
-    <div *ngFor="let task of inReviewTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
-    </div>
-  </div>
-  <div class="column" id="doneTasks" cdkDropList [cdkDropListData]="doneTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>Done</h3>
-    <div *ngFor="let task of doneTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
+    <div class="link-field">
+      <label>Live</label>
+      <input type="text" class="link-input" [(ngModel)]="liveLink" (ngModelChange)="onLiveLinkChange()" placeholder="https://...">
     </div>
   </div>
 </div>
 
-<div *ngIf="boardType === 'project'" class="large-box" id="backlogTasks" cdkDropList [cdkDropListData]="backlogTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
+<!-- Backlog Section -->
+<div *ngIf="boardType === 'project' || boardType === 'gamedev'" class="large-box" id="backlogTasks" cdkDropList [cdkDropListData]="backlogTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
   <button mat-fab matTooltip="Add Task" color="primary" (click)="addTask()">
     <mat-icon>add</mat-icon>
   </button>
   <h3>Backlog</h3>
   <div *ngFor="let task of backlogTasks" cdkDrag>
-    <app-task-list-card [task]="task"></app-task-list-card>
-  </div>
-</div>
-
-<!-- Content Board Swimlanes -->
-<div *ngIf="boardType === 'content'" class="columns-container content-board" cdkDropListGroup>
-  <div class="column content-column" id="videoTasks" cdkDropList [cdkDropListData]="videoTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>Video</h3>
-    <div *ngFor="let task of videoTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
-    </div>
-  </div>
-  <div class="column content-column" id="uploadedTasks" cdkDropList [cdkDropListData]="uploadedTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">
-    <h3>Uploaded</h3>
-    <div *ngFor="let task of uploadedTasks" cdkDrag>
-      <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
-    </div>
+    <app-task-list-card [task]="task" (increasePriority)="onIncreaseTaskPriority($event)" (decreasePriority)="onDecreaseTaskPriority($event)" (deleteTask)="onDeleteTask($event)"></app-task-list-card>
   </div>
 </div>
 

@@ -21,7 +21,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT, boardType TEXT DEFAULT \'project\', priority INTEGER DEFAULT 0, sortOrder INTEGER DEFAULT 0, ideas TEXT)');
+    db.run('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT, boardType TEXT DEFAULT \'project\', priority INTEGER DEFAULT 0, sortOrder INTEGER DEFAULT 0, ideas TEXT, gameDevDoc TEXT, prototypeLink TEXT, liveLink TEXT)');
     db.run('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name TEXT, description TEXT, points INTEGER, date TEXT, doneDate TEXT, priority INTEGER DEFAULT 0, projectId INTEGER, state TEXT, FOREIGN KEY(projectId) REFERENCES projects(id))');
     db.run('CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY, taskId INTEGER, text TEXT, createdAt TEXT, FOREIGN KEY(taskId) REFERENCES tasks(id) ON DELETE CASCADE)');
 
@@ -40,6 +40,15 @@ db.serialize(() => {
       }
       if (!cols.includes('ideas')) {
         db.run('ALTER TABLE projects ADD COLUMN ideas TEXT');
+      }
+      if (!cols.includes('gameDevDoc')) {
+        db.run('ALTER TABLE projects ADD COLUMN gameDevDoc TEXT');
+      }
+      if (!cols.includes('prototypeLink')) {
+        db.run('ALTER TABLE projects ADD COLUMN prototypeLink TEXT');
+      }
+      if (!cols.includes('liveLink')) {
+        db.run('ALTER TABLE projects ADD COLUMN liveLink TEXT');
       }
     });
 
@@ -126,6 +135,54 @@ db.serialize(() => {
       if (err) return res.status(500).json({ error: err.message });
       if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
       res.json({ message: 'Ideas updated', id: projectId, ideas });
+    });
+  });
+
+  app.patch('/projects/:id/gameDevDoc', (req, res) => {
+    const projectId = req.params.id;
+    const { gameDevDoc } = req.body;
+    if (gameDevDoc === undefined || gameDevDoc === null) {
+      return res.status(400).json({ error: 'gameDevDoc field is required' });
+    }
+    db.run('UPDATE projects SET gameDevDoc = ? WHERE id = ?', [gameDevDoc, projectId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
+      res.json({ message: 'GameDev doc updated', id: projectId, gameDevDoc });
+    });
+  });
+
+  app.delete('/projects/:id/gameDevDoc', (req, res) => {
+    const projectId = req.params.id;
+    db.run('UPDATE projects SET gameDevDoc = NULL WHERE id = ?', [projectId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
+      res.json({ message: 'GameDev doc removed', id: projectId });
+    });
+  });
+
+  app.patch('/projects/:id/prototypeLink', (req, res) => {
+    const projectId = req.params.id;
+    const { prototypeLink } = req.body;
+    if (prototypeLink === undefined || prototypeLink === null) {
+      return res.status(400).json({ error: 'prototypeLink field is required' });
+    }
+    db.run('UPDATE projects SET prototypeLink = ? WHERE id = ?', [prototypeLink, projectId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
+      res.json({ message: 'Prototype link updated', id: projectId, prototypeLink });
+    });
+  });
+
+  app.patch('/projects/:id/liveLink', (req, res) => {
+    const projectId = req.params.id;
+    const { liveLink } = req.body;
+    if (liveLink === undefined || liveLink === null) {
+      return res.status(400).json({ error: 'liveLink field is required' });
+    }
+    db.run('UPDATE projects SET liveLink = ? WHERE id = ?', [liveLink, projectId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
+      res.json({ message: 'Live link updated', id: projectId, liveLink });
     });
   });
 
@@ -314,7 +371,7 @@ db.serialize(() => {
     const doneStates = ['done', 'uploaded'];
     const placeholders = doneStates.map(() => '?').join(',');
     const sql = `
-      SELECT t.id as taskId, t.name as taskName, t.description, t.points, t.date, t.doneDate, t.state,
+      SELECT t.id as taskId, t.name as taskName, t.description, t.points, t.date, t.doneDate, t.state, t.priority,
              p.id as projectId, p.name as projectName, p.boardType
       FROM tasks t
       JOIN projects p ON t.projectId = p.id
@@ -344,7 +401,8 @@ db.serialize(() => {
           points: row.points,
           date: row.date,
           doneDate: row.doneDate,
-          state: row.state
+          state: row.state,
+          priority: row.priority || 0
         });
       });
       res.json(Object.values(byProject));

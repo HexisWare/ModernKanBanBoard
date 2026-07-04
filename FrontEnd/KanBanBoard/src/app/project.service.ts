@@ -77,6 +77,22 @@ export class ProjectService {
     return this.http.patch(`${this.apiUrl}/${projectId}/ideas`, { ideas });
   }
 
+  updateGameDevDoc(projectId: number, gameDevDoc: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${projectId}/gameDevDoc`, { gameDevDoc });
+  }
+
+  deleteGameDevDoc(projectId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${projectId}/gameDevDoc`);
+  }
+
+  updatePrototypeLink(projectId: number, prototypeLink: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${projectId}/prototypeLink`, { prototypeLink });
+  }
+
+  updateLiveLink(projectId: number, liveLink: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${projectId}/liveLink`, { liveLink });
+  }
+
   reorderProjects(orderedIds: number[]): Observable<any> {
     return this.http.patch(`${this.apiUrl}/reorder`, { orderedIds });
   }

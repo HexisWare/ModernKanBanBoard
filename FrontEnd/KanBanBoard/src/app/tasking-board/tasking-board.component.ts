@@ -18,7 +18,13 @@ export class TaskingBoardComponent {
   boardType: string = 'project';
   projectName: string = '';
   ideas: string = '';
+  gameDevDoc: string = '';
+  gameDevDocName: string = '';
+  prototypeLink: string = '';
+  liveLink: string = '';
   private ideasTimer: any;
+  private prototypeLinkTimer: any;
+  private liveLinkTimer: any;
 
   constructor(private router: Router, private projectService: ProjectService, public dialog: MatDialog) {
     const navigation = this.router.getCurrentNavigation();
@@ -48,6 +54,17 @@ export class TaskingBoardComponent {
           this.boardType = project.boardType || 'project';
           this.projectName = project.name || '';
           this.ideas = project.ideas || '';
+          this.gameDevDoc = project.gameDevDoc || '';
+          if (this.gameDevDoc) {
+            try {
+              const parsed = JSON.parse(this.gameDevDoc);
+              this.gameDevDocName = parsed.name || '';
+            } catch (e) {
+              this.gameDevDocName = '';
+            }
+          }
+          this.prototypeLink = project.prototypeLink || '';
+          this.liveLink = project.liveLink || '';
           this.updateListIds();
           this.loadTasks();
         },
@@ -66,6 +83,8 @@ export class TaskingBoardComponent {
   updateListIds() {
     if (this.boardType === 'content') {
       this.allListIds = ['videoTasks', 'uploadedTasks'];
+    } else if (this.boardType === 'gamedev') {
+      this.allListIds = ['readyToWorkTasks', 'inProgressTasks', 'blockedTasks', 'inReviewTasks', 'doneTasks', 'backlogTasks'];
     } else {
       this.allListIds = ['readyToWorkTasks', 'inProgressTasks', 'blockedTasks', 'inReviewTasks', 'doneTasks', 'backlogTasks'];
     }
@@ -93,6 +112,13 @@ export class TaskingBoardComponent {
     if (this.boardType === 'content') {
       this.videoTasks = this.tasks.filter(task => task.state === 'video');
       this.uploadedTasks = this.tasks.filter(task => task.state === 'uploaded');
+    } else if (this.boardType === 'gamedev') {
+      this.backlogTasks = this.tasks.filter(task => task.state === 'backlog');
+      this.inProgressTasks = this.tasks.filter(task => task.state === 'in progress');
+      this.readyToWorkTasks = this.tasks.filter(task => task.state === 'ready to work');
+      this.blockedTasks = this.tasks.filter(task => task.state === 'blocked');
+      this.inReviewTasks = this.tasks.filter(task => task.state === 'in review');
+      this.doneTasks = this.tasks.filter(task => task.state === 'done');
     } else {
       this.backlogTasks = this.tasks.filter(task => task.state === 'backlog');
       this.inProgressTasks = this.tasks.filter(task => task.state === 'in progress');
@@ -166,6 +192,63 @@ export class TaskingBoardComponent {
         this.projectService.updateIdeas(this.projectId_['key'], this.ideas).subscribe(
           () => {},
           error => console.error('Error saving ideas', error)
+        );
+      }
+    }, 800);
+  }
+
+  onGameDevDocUpload(event: any): void {
+    const file = event.target.files[0];
+    if (!file) return;
+    this.gameDevDocName = file.name;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const fileData = reader.result as string;
+      this.gameDevDoc = JSON.stringify({ name: file.name, data: fileData });
+      if (this.projectId_ && this.projectId_['key']) {
+        this.projectService.updateGameDevDoc(this.projectId_['key'], this.gameDevDoc).subscribe(
+          () => {},
+          error => console.error('Error saving game dev doc', error)
+        );
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onGameDevDocRemove(): void {
+    this.gameDevDoc = '';
+    this.gameDevDocName = '';
+    if (this.projectId_ && this.projectId_['key']) {
+      this.projectService.deleteGameDevDoc(this.projectId_['key']).subscribe(
+        () => {},
+        error => console.error('Error removing game dev doc', error)
+      );
+    }
+  }
+
+  onPrototypeLinkChange(): void {
+    if (this.prototypeLinkTimer) {
+      clearTimeout(this.prototypeLinkTimer);
+    }
+    this.prototypeLinkTimer = setTimeout(() => {
+      if (this.projectId_ && this.projectId_['key']) {
+        this.projectService.updatePrototypeLink(this.projectId_['key'], this.prototypeLink).subscribe(
+          () => {},
+          error => console.error('Error saving prototype link', error)
+        );
+      }
+    }, 800);
+  }
+
+  onLiveLinkChange(): void {
+    if (this.liveLinkTimer) {
+      clearTimeout(this.liveLinkTimer);
+    }
+    this.liveLinkTimer = setTimeout(() => {
+      if (this.projectId_ && this.projectId_['key']) {
+        this.projectService.updateLiveLink(this.projectId_['key'], this.liveLink).subscribe(
+          () => {},
+          error => console.error('Error saving live link', error)
         );
       }
     }, 800);

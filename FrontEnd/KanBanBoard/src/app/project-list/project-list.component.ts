@@ -19,11 +19,15 @@ export class ProjectListComponent {
   }
 
   get projectBoards(): Project[] {
-    return this.projects.filter(p => p.boardType !== 'content');
+    return this.projects.filter(p => p.boardType !== 'content' && p.boardType !== 'gamedev');
   }
 
   get contentBoards(): Project[] {
     return this.projects.filter(p => p.boardType === 'content');
+  }
+
+  get gameDevBoards(): Project[] {
+    return this.projects.filter(p => p.boardType === 'gamedev');
   }
 
   loadProjects() {
@@ -81,6 +85,28 @@ export class ProjectListComponent {
 
   moveDownContent(index: number) {
     const boards = this.contentBoards;
+    if (index === boards.length - 1) return;
+    const ids = boards.map(p => p.id!);
+    [ids[index], ids[index + 1]] = [ids[index + 1], ids[index]];
+    this.projectService.reorderProjects(ids).subscribe(
+      () => this.loadProjects(),
+      error => console.error('Error reordering', error)
+    );
+  }
+
+  moveUpGameDev(index: number) {
+    const boards = this.gameDevBoards;
+    if (index === 0) return;
+    const ids = boards.map(p => p.id!);
+    [ids[index - 1], ids[index]] = [ids[index], ids[index - 1]];
+    this.projectService.reorderProjects(ids).subscribe(
+      () => this.loadProjects(),
+      error => console.error('Error reordering', error)
+    );
+  }
+
+  moveDownGameDev(index: number) {
+    const boards = this.gameDevBoards;
     if (index === boards.length - 1) return;
     const ids = boards.map(p => p.id!);
     [ids[index], ids[index + 1]] = [ids[index + 1], ids[index]];

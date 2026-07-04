@@ -5,8 +5,8 @@
   </div>
   <div class="card-row">
     <div class="card-info">
-      <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'">
-        {{ project.boardType === 'content' ? 'Content' : 'Project' }}
+      <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'" [class.gamedev-badge]="project.boardType === 'gamedev'">
+        {{ project.boardType === 'content' ? 'Content' : (project.boardType === 'gamedev' ? 'GameDev' : 'Project') }}
       </span>
       <span class="priority-badge {{ getPriorityClass() }}" matTooltip="Priority">
         <mat-icon class="priority-icon">{{ getPriorityIcon() }}</mat-icon>
