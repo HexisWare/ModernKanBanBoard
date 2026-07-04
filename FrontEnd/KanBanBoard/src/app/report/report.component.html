@@ -1,0 +1,70 @@
+<div class="report-page">
+  <div class="report-header">
+    <button mat-raised-button (click)="prevYear()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h2>{{ selectedYear }} Annual Report</h2>
+    <button mat-raised-button (click)="nextYear()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-msg">Loading report...</div>
+
+  <div *ngIf="!loading && reportData.length === 0" class="empty-msg">
+    No completed tasks found for {{ selectedYear }}.
+  </div>
+
+  <div *ngFor="let project of reportData" class="project-report">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <b>{{ project.projectName }}</b>
+          <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'">
+            {{ project.boardType === 'content' ? 'Content Board' : 'Project Board' }}
+          </span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="quarters-grid">
+          <div class="quarter">
+            <h3>Q1 (Jan-Mar)</h3>
+            <div *ngIf="getTasksForQuarter(project, 1).length === 0" class="no-tasks">No tasks</div>
+            <div *ngFor="let task of getTasksForQuarter(project, 1)" class="report-task">
+              <span class="task-date">{{ task.doneDate }}</span>
+              <span class="task-name">{{ task.name }}</span>
+              <span class="task-points">{{ task.points }} pts</span>
+            </div>
+          </div>
+          <div class="quarter">
+            <h3>Q2 (Apr-Jun)</h3>
+            <div *ngIf="getTasksForQuarter(project, 2).length === 0" class="no-tasks">No tasks</div>
+            <div *ngFor="let task of getTasksForQuarter(project, 2)" class="report-task">
+              <span class="task-date">{{ task.doneDate }}</span>
+              <span class="task-name">{{ task.name }}</span>
+              <span class="task-points">{{ task.points }} pts</span>
+            </div>
+          </div>
+          <div class="quarter">
+            <h3>Q3 (Jul-Sep)</h3>
+            <div *ngIf="getTasksForQuarter(project, 3).length === 0" class="no-tasks">No tasks</div>
+            <div *ngFor="let task of getTasksForQuarter(project, 3)" class="report-task">
+              <span class="task-date">{{ task.doneDate }}</span>
+              <span class="task-name">{{ task.name }}</span>
+              <span class="task-points">{{ task.points }} pts</span>
+            </div>
+          </div>
+          <div class="quarter">
+            <h3>Q4 (Oct-Dec)</h3>
+            <div *ngIf="getTasksForQuarter(project, 4).length === 0" class="no-tasks">No tasks</div>
+            <div *ngFor="let task of getTasksForQuarter(project, 4)" class="report-task">
+              <span class="task-date">{{ task.doneDate }}</span>
+              <span class="task-name">{{ task.name }}</span>
+              <span class="task-points">{{ task.points }} pts</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,8 +1,39 @@
-<div *ngIf="!projects">
+<div class="project-list-container">
+  <div *ngIf="!projects || projects.length === 0" class="no-projects">
     No Projects
-</div>
-<div *ngIf="projects">
-    <div *ngFor="let project of projects">
-        <app-project-list-card  [project]="project"></app-project-list-card>
+  </div>
+
+  <div *ngIf="projects && projects.length > 0" class="columns-wrapper">
+    <!-- Project Boards Column -->
+    <div *ngIf="projectBoards.length > 0" class="board-column">
+      <h2 class="column-header">Projects</h2>
+      <div *ngFor="let project of projectBoards; let i = index" class="project-card-wrapper">
+        <app-project-list-card
+          [project]="project"
+          [index]="i"
+          [total]="projectBoards.length"
+          (moveUp)="moveUpProject($event)"
+          (moveDown)="moveDownProject($event)"
+          (increasePriority)="increasePriority($event)"
+          (decreasePriority)="decreasePriority($event)">
+        </app-project-list-card>
+      </div>
     </div>
+
+    <!-- Content Boards Column -->
+    <div *ngIf="contentBoards.length > 0" class="board-column">
+      <h2 class="column-header">Content</h2>
+      <div *ngFor="let project of contentBoards; let i = index" class="project-card-wrapper">
+        <app-project-list-card
+          [project]="project"
+          [index]="i"
+          [total]="contentBoards.length"
+          (moveUp)="moveUpContent($event)"
+          (moveDown)="moveDownContent($event)"
+          (increasePriority)="increasePriority($event)"
+          (decreasePriority)="decreasePriority($event)">
+        </app-project-list-card>
+      </div>
+    </div>
+  </div>
 </div>

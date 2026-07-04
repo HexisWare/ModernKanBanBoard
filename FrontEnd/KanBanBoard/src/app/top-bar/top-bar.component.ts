@@ -11,20 +11,17 @@ import { AddProjectDialogComponent } from '../add-project-dialog/add-project-dia
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent {
+
   constructor(private projectService: ProjectService,public dialog: MatDialog) {}
 
   addProject(): void {
-    //window.alert('New Project has been added!');
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
-      width: '300px'
+      width: '350px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // ... handle result
-      if (result) {
-        console.log(result.name, result.description);
-        this.projectService.addProject(result);
+      if (result && result.refresh) {
+        this.projectService.notifyRefresh();
       }
     });
   }

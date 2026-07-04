@@ -1,7 +1,12 @@
-<a [routerLink]="['/']">
+<div class="top-bar-nav">
+  <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     <h1>Projects</h1>
   </a>
+  <a [routerLink]="['/report']" class="report-link" routerLinkActive="active">
+    <h1>Report</h1>
+  </a>
+</div>
 
-  <button mat-fab matTooltip="Primary" color="primary" aria-label="Example fab with a heart icon" (click)="addProject()">
-    <mat-icon>add</mat-icon>
-  </button>
+<button mat-fab matTooltip="Add Project" color="primary" aria-label="Add project" (click)="addProject()">
+  <mat-icon>add</mat-icon>
+</button>

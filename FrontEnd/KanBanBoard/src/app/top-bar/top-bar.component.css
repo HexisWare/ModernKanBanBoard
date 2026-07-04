@@ -1,0 +1,26 @@
+.top-bar-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.top-bar-nav a {
+  text-decoration: none;
+}
+
+.top-bar-nav h1 {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0;
+  padding: 4px 0;
+  color: #8b949e;
+  transition: color 0.2s ease;
+}
+
+.top-bar-nav a:hover h1 {
+  color: #e8eaf0;
+}
+
+.report-link h1 {
+  opacity: 1;
+}

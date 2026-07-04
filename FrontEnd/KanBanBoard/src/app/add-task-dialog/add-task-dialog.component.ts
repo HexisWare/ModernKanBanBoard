@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProjectService } from '../project.service';
 
@@ -12,20 +12,36 @@ export class AddTaskDialogComponent {
   description: string = '';
   points: number = 0;
   date: string = '';
-  projectOf: number = 0;
   state: string = '';
+  priority: number = 0;
+  projectId: number = 0;
+  boardType: string = 'project';
 
-  constructor(public dialogRef: MatDialogRef<AddTaskDialogComponent>,private projectService: ProjectService) {}
+  constructor(
+    public dialogRef: MatDialogRef<AddTaskDialogComponent>,
+    private projectService: ProjectService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    if (data) {
+      this.projectId = data.projectId || 0;
+      this.boardType = data.boardType || 'project';
+      if (this.boardType === 'content') {
+        this.state = 'video';
+      } else {
+        this.state = 'backlog';
+      }
+    }
+  }
 
   onSave(): void {
-    const formData = {name: this.name, description: this.description, points: Number(this.points), date: this.date, state: this.state};
+    const formData = {name: this.name, description: this.description, points: Number(this.points), date: this.date, state: this.state, priority: Number(this.priority)};
 
-    this.projectService.addTaskByprojectId(formData, Number(this.projectOf)).subscribe(
+    this.projectService.addTaskByprojectId(formData, Number(this.projectId)).subscribe(
       response => {
-        this.dialogRef.close();
+        this.dialogRef.close({ refresh: true });
       },
       error => {
-        console.error('There was an error connecting to backend, cant add Project!', error);
+        console.error('There was an error connecting to backend, cant add Task!', error);
         this.dialogRef.close();
       }
     );

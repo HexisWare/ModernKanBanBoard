@@ -1,16 +1,37 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <b>{{project.name}}</b>
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        {{project.description}}
-    </mat-card-content>
-    {{project.id}}
-    <button type="button" (click)="openBoard()">
-        Board
+<mat-card class="project-card">
+  <div class="card-title-row">
+    <span class="project-name" (click)="openBoard()">{{ project.name }}</span>
+    <span class="card-desc" *ngIf="project.description">{{ project.description }}</span>
+  </div>
+  <div class="card-row">
+    <div class="card-info">
+      <span class="board-type-badge" [class.content-badge]="project.boardType === 'content'">
+        {{ project.boardType === 'content' ? 'Content' : 'Project' }}
+      </span>
+      <span class="priority-badge {{ getPriorityClass() }}" matTooltip="Priority">
+        <mat-icon class="priority-icon">{{ getPriorityIcon() }}</mat-icon>
+        {{ getPriorityLabel() }}
+      </span>
+    </div>
+    <div class="card-actions">
+      <button mat-icon-button matTooltip="Decrease priority" (click)="onDecreasePriority()">
+        <mat-icon>remove</mat-icon>
       </button>
-  </mat-card>
+      <button mat-icon-button matTooltip="Increase priority" (click)="onIncreasePriority()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span class="divider"></span>
+      <button mat-icon-button matTooltip="Move up" [disabled]="index === 0" (click)="onMoveUp()">
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Move down" [disabled]="index === total - 1" (click)="onMoveDown()">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+      <button mat-mini-fab matTooltip="Open Board" color="primary" (click)="openBoard()">
+        <mat-icon>dashboard</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>
 
   

@@ -4,7 +4,16 @@ export interface Task {
     description: string;
     points: number;
     date: string;
+    doneDate?: string;
+    priority?: number;
     state: string;
+  }
+
+  export interface Comment {
+    id: number;
+    taskId: number;
+    text: string;
+    createdAt: string;
   }
   //state: 'backlog' | 'ready to work' | 'in progress' | 'blocked' | 'in review' | 'done'
   //name, description, points, date, projectId

@@ -1,37 +1,108 @@
 html, body { height: 100%; width: 100%; }
 
+.board-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background-color: #161b22;
+  border-bottom: 1px solid #30363d;
+  margin-bottom: 16px;
+}
+
+.board-title {
+  margin: 0;
+  flex: 1;
+  font-size: 22px;
+  font-weight: 500;
+  color: #e8eaf0;
+}
+
+.board-type-label {
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  margin-right: auto;
+}
+
+.content-label {
+  background-color: rgba(165, 130, 255, 0.15);
+  color: #a582ff;
+  border: 1px solid rgba(165, 130, 255, 0.3);
+}
+
 .columns-container {
-    display: flex;
-    width: 100vw;
-    /* Add other styling as needed */
-  }
-  
-  .column {
-    flex: 1;
-    background-color: #c0c0c0; /* Slightly grey background */
-    border: 1px solid #d3d3d3; /* Light grey outline */
-    padding: 10px; /* Add padding */
-    margin: 5px; /* Optional: add some space between columns */
-    /* Add other styling as needed */
-  }
-  
-  .large-box {
-    /* Styling for the large box */
-    margin-top: 10px; /* Optional: add space above the large box */
-  }
-  
-  .cdk-drag-preview {
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.column {
+  flex: 1;
+  min-height: 200px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 4px;
+}
+
+.column h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b949e;
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #30363d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.content-column {
+  flex: 1;
+  min-height: 300px;
+}
+
+.large-box {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  position: relative;
+  min-height: 100px;
+}
+
+.large-box h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b949e;
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #30363d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
 }
 
 .cdk-drag-placeholder {
-    opacity: 0;
+  opacity: 0.3;
 }
 
 .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .column cdkDrag {
-    cursor: move;
+  cursor: move;
 }

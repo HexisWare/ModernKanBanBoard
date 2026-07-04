@@ -1,0 +1,141 @@
+.project-card {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: #161b22 !important;
+  border: 1px solid #30363d;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 6px 14px 10px !important;
+}
+
+.project-card:hover {
+  border-color: #58a6ff;
+  box-shadow: 0 2px 12px rgba(88, 166, 255, 0.12);
+}
+
+.card-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.project-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8eaf0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-name:hover {
+  color: #58a6ff;
+}
+
+.board-type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  background-color: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  font-weight: 500;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  white-space: nowrap;
+  min-width: 52px;
+  height: 18px;
+}
+
+.content-badge {
+  background-color: rgba(165, 130, 255, 0.15);
+  color: #a582ff;
+  border: 1px solid rgba(165, 130, 255, 0.3);
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #30363d;
+  margin: 0 4px;
+}
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  min-width: 52px;
+  height: 18px;
+}
+
+.priority-icon {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.priority-none {
+  background-color: #484f58;
+}
+
+.priority-lowest {
+  background-color: #36b37e;
+}
+
+.priority-low {
+  background-color: #00b8d9;
+}
+
+.priority-medium {
+  background-color: #ffab00;
+}
+
+.priority-high {
+  background-color: #ff8b00;
+}
+
+.priority-highest {
+  background-color: #de350b;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: #6e7681;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

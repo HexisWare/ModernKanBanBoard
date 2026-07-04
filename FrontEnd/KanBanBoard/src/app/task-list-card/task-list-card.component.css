@@ -1,0 +1,266 @@
+.task-card {
+  margin-bottom: 6px;
+  border-radius: 6px;
+  background-color: #161b22 !important;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  padding: 6px 10px !important;
+}
+
+.task-card:hover {
+  border-color: #58a6ff;
+}
+
+.task-top-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.task-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8eaf0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-bottom-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.task-points {
+  font-size: 11px;
+  font-weight: 600;
+  color: #58a6ff;
+  white-space: nowrap;
+}
+
+.task-date {
+  font-size: 10px;
+  color: #6e7681;
+  white-space: nowrap;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.task-state {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: white;
+  white-space: nowrap;
+}
+
+.state-backlog {
+  background-color: #6b778c;
+}
+
+.state-ready-to-work {
+  background-color: #2684ff;
+}
+
+.state-in-progress {
+  background-color: #0052cc;
+}
+
+.state-blocked {
+  background-color: #de350b;
+}
+
+.state-in-review {
+  background-color: #ff991f;
+}
+
+.state-done {
+  background-color: #36b37e;
+}
+
+.state-video {
+  background-color: #6554c0;
+}
+
+.state-uploaded {
+  background-color: #36b37e;
+}
+
+.task-priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.priority-icon {
+  font-size: 12px !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.priority-none {
+  background-color: #484f58;
+}
+
+.priority-lowest {
+  background-color: #36b37e;
+}
+
+.priority-low {
+  background-color: #00b8d9;
+}
+
+.priority-medium {
+  background-color: #ffab00;
+}
+
+.priority-high {
+  background-color: #ff8b00;
+}
+
+.priority-highest {
+  background-color: #de350b;
+}
+
+.delete-btn {
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  color: #ff6b6b !important;
+}
+
+.delete-btn mat-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.priority-btn mat-icon {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.expand-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #6e7681;
+  flex-shrink: 0;
+}
+
+.comments-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #30363d;
+}
+
+.comments-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8b949e;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comments-loading, .no-comments {
+  font-size: 12px;
+  color: #6e7681;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.comment-item {
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  background-color: #0d1117;
+  border-radius: 6px;
+  border-left: 2px solid #58a6ff;
+}
+
+.comment-text {
+  font-size: 12px;
+  color: #e8eaf0;
+  word-wrap: break-word;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.comment-date {
+  font-size: 10px;
+  color: #6e7681;
+}
+
+.comment-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.comment-delete mat-icon {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  color: #6e7681;
+}
+
+.comment-delete:hover mat-icon {
+  color: #ff6b6b;
+}
+
+.add-comment-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.comment-input {
+  flex: 1;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #e8eaf0;
+  outline: none;
+}
+
+.comment-input:focus {
+  border-color: #58a6ff;
+}
+
+.comment-input::placeholder {
+  color: #6e7681;
+}

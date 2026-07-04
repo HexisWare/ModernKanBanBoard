@@ -47,8 +47,7 @@ Thumbs.db
 # Angular Cache
 **/.angular/cache/
 
-# Keep Database folder but NOT contents
-# Ignore everything in the Database folder
+# Keep Database folder and DB file
 Database/*
-# But keep the folder itself
 !Database/.gitkeep
+!Database/projecttasking.db

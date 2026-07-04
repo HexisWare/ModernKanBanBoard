@@ -10,15 +10,17 @@ import { ProjectService } from '../project.service';
 export class AddProjectDialogComponent {
   name: string = '';
   description: string = '';
+  boardType: string = 'project';
+  priority: number = 0;
 
   constructor(public dialogRef: MatDialogRef<AddProjectDialogComponent>,private projectService: ProjectService) {}
 
   onSave(): void {
-    const formData = {name: this.name, description: this.description};
+    const formData = {name: this.name, description: this.description, boardType: this.boardType, priority: Number(this.priority)};
 
     this.projectService.addProject(formData).subscribe(
       response => {
-        this.dialogRef.close();
+        this.dialogRef.close({ refresh: true });
       },
       error => {
         console.error('There was an error connecting to backend, cant add Project!', error);

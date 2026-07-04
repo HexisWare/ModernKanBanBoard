@@ -5,6 +5,7 @@ import { tasks, Task } from '../tasks';
 import { ProjectService } from '../project.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from '../add-task-dialog/add-task-dialog.component';
+import { ImportDialogComponent } from '../import-dialog/import-dialog.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -14,13 +15,13 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 export class TaskingBoardComponent {
   projectId_: any;
+  boardType: string = 'project';
+  projectName: string = '';
 
   constructor(private router: Router, private projectService: ProjectService, public dialog: MatDialog) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       this.projectId_ = navigation.extras.state['id'];
-      console.log("projectId_");
-      console.log(this.projectId_);
     }
   }
 
@@ -33,9 +34,41 @@ export class TaskingBoardComponent {
   inReviewTasks: Task[] = [];
   doneTasks: Task[] = [];
 
-  allListIds = ['readyToWorkTasks', 'inProgressTasks', 'blockedTasks', 'inReviewTasks', 'doneTasks', 'backlogTasks'];
+  videoTasks: Task[] = [];
+  uploadedTasks: Task[] = [];
+
+  allListIds: string[] = [];
 
   ngOnInit() {
+    if (this.projectId_ && this.projectId_['key']) {
+      this.projectService.getProjectById(this.projectId_['key']).subscribe(
+        project => {
+          this.boardType = project.boardType || 'project';
+          this.projectName = project.name || '';
+          this.updateListIds();
+          this.loadTasks();
+        },
+        error => {
+          console.error('Error fetching project, defaulting to project board', error);
+          this.updateListIds();
+          this.loadTasks();
+        }
+      );
+    } else {
+      this.updateListIds();
+      this.loadTasks();
+    }
+  }
+
+  updateListIds() {
+    if (this.boardType === 'content') {
+      this.allListIds = ['videoTasks', 'uploadedTasks'];
+    } else {
+      this.allListIds = ['readyToWorkTasks', 'inProgressTasks', 'blockedTasks', 'inReviewTasks', 'doneTasks', 'backlogTasks'];
+    }
+  }
+
+  loadTasks() {
     this.projectService.getTasksByProjectId(this.projectId_['key']).subscribe(
       data => {
         if(data) {
@@ -54,12 +87,17 @@ export class TaskingBoardComponent {
   }
 
   categorizeTasks() {
-    this.backlogTasks = this.tasks.filter(task => task.state === 'backlog');
-    this.inProgressTasks = this.tasks.filter(task => task.state === 'in progress');
-    this.readyToWorkTasks = this.tasks.filter(task => task.state === 'ready to work');
-    this.blockedTasks = this.tasks.filter(task => task.state === 'blocked');
-    this.inReviewTasks = this.tasks.filter(task => task.state === 'in review');
-    this.doneTasks = this.tasks.filter(task => task.state === 'done');
+    if (this.boardType === 'content') {
+      this.videoTasks = this.tasks.filter(task => task.state === 'video');
+      this.uploadedTasks = this.tasks.filter(task => task.state === 'uploaded');
+    } else {
+      this.backlogTasks = this.tasks.filter(task => task.state === 'backlog');
+      this.inProgressTasks = this.tasks.filter(task => task.state === 'in progress');
+      this.readyToWorkTasks = this.tasks.filter(task => task.state === 'ready to work');
+      this.blockedTasks = this.tasks.filter(task => task.state === 'blocked');
+      this.inReviewTasks = this.tasks.filter(task => task.state === 'in review');
+      this.doneTasks = this.tasks.filter(task => task.state === 'done');
+    }
   }
 
   back() {
@@ -68,24 +106,55 @@ export class TaskingBoardComponent {
   }
 
   addTask(): void {
-    //window.alert('New Project has been added!');
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
-      width: '300px'
+      width: '350px',
+      data: { projectId: this.projectId_['key'], boardType: this.boardType }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // ... handle result
-      if (result) {
-        console.log(result.name, result.description, result.state, result.points, result.date);
-        this.projectService.addProject(result.name);
+      if (result && result.refresh) {
+        this.loadTasks();
       }
     });
   }
 
+  importTasks(): void {
+    const dialogRef = this.dialog.open(ImportDialogComponent, {
+      width: '500px',
+      data: { projectId: this.projectId_['key'] }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.refresh) {
+        this.loadTasks();
+      }
+    });
+  }
+
+  onIncreaseTaskPriority(task: any): void {
+    const newPriority = Math.min(5, (task.priority || 0) + 1);
+    this.projectService.updateTaskPriority(task.id, newPriority).subscribe(
+      () => this.loadTasks(),
+      error => console.error('Error updating task priority', error)
+    );
+  }
+
+  onDecreaseTaskPriority(task: any): void {
+    const newPriority = Math.max(0, (task.priority || 0) - 1);
+    this.projectService.updateTaskPriority(task.id, newPriority).subscribe(
+      () => this.loadTasks(),
+      error => console.error('Error updating task priority', error)
+    );
+  }
+
+  onDeleteTask(task: any): void {
+    this.projectService.deleteTask(task.id).subscribe(
+      () => this.loadTasks(),
+      error => console.error('Error deleting task', error)
+    );
+  }
+
   drop(event: CdkDragDrop<Task[]>): void {
-    console.log('Dropped event: ', event);
-    
     const previousContainerId = event.previousContainer.id;
     const currentContainerId = event.container.id;
   
@@ -97,17 +166,14 @@ export class TaskingBoardComponent {
                         event.previousIndex,
                         event.currentIndex);
   
-      // Assuming the container IDs match the state names
       const task = event.container.data[event.currentIndex];
       const newState = this.getStateFromContainerId(currentContainerId);
   
-      // Update task state in backend
       this.projectService.updateTaskState(task.id, newState).subscribe({
         next: (response) => console.log('Task state updated', response),
         error: (err) => console.error('Error updating task state', err)
       });
   
-      // Optionally, update task state locally for immediate UI reflection
       task.state = newState;
     }
   }
@@ -119,7 +185,9 @@ export class TaskingBoardComponent {
       'readyToWorkTasks': 'ready to work',
       'blockedTasks': 'blocked',
       'inReviewTasks': 'in review',
-      'doneTasks': 'done'
+      'doneTasks': 'done',
+      'videoTasks': 'video',
+      'uploadedTasks': 'uploaded'
     };
     return stateMap[containerId] || 'unknown';
   }

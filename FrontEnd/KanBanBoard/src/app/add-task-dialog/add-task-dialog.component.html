@@ -10,20 +10,35 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Points</mat-label>
-    <input matInput [(ngModel)]="points">
+    <input matInput type="number" [(ngModel)]="points">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Date</mat-label>
-    <input matInput [(ngModel)]="date">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>ProjectOf</mat-label>
-    <input matInput [(ngModel)]="projectOf">
+    <input matInput type="date" [(ngModel)]="date">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>State</mat-label>
-    <p>Possible States: 'backlog' | 'ready to work' | 'in progress' | 'blocked' | 'in review' | 'done'</p>
-    <input matInput [(ngModel)]="state">
+    <mat-select [(ngModel)]="state">
+      <mat-option *ngIf="boardType === 'content'" value="video">Video</mat-option>
+      <mat-option *ngIf="boardType === 'content'" value="uploaded">Uploaded</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="backlog">Backlog</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="ready to work">Ready To Work</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="in progress">In Progress</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="blocked">Blocked</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="in review">In Review</mat-option>
+      <mat-option *ngIf="boardType !== 'content'" value="done">Done</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select [(ngModel)]="priority">
+      <mat-option [value]="0">None</mat-option>
+      <mat-option [value]="1">Lowest</mat-option>
+      <mat-option [value]="2">Low</mat-option>
+      <mat-option [value]="3">Medium</mat-option>
+      <mat-option [value]="4">High</mat-option>
+      <mat-option [value]="5">Highest</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -1,6 +1,10 @@
 export interface Project {
+    id?: number;
     name: string;
     description: string;
+    boardType?: string;
+    priority?: number;
+    sortOrder?: number;
   }
   
   //Placeholder if error

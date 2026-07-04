@@ -2,7 +2,7 @@
 
 * {
     font-family: 'Roboto', Arial, sans-serif;
-    color: #616161;
+    color: #e8eaf0;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -10,21 +10,22 @@
   
   body {
     margin: 0;
+    background-color: #0d1117;
   }
   
   .container {
-    display: flex;
-    flex-direction: row;
+    display: block;
+    min-height: calc(100vh - 60px);
   }
   
   router-outlet + *  {
-    padding: 0 16px;
+    padding: 0;
   }
   
   /* Text */
   
   h1 {
-    font-size: 32px;
+    font-size: 22px;
   }
   
   h2 {
@@ -32,7 +33,7 @@
   }
   
   h1, h2 {
-    font-weight: lighter;
+    font-weight: 500;
   }
   
   p {
@@ -43,105 +44,45 @@
   
   a {
     cursor: pointer;
-    color: #1976d2;
+    color: #58a6ff;
     text-decoration: none;
   }
   
   a:hover {
-    opacity: 0.8;
-  }
-  
-  /* Input */
-  
-  input {
-    font-size: 14px;
-    border-radius: 2px;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #BDBDBD;
-  }
-  
-  label {
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 4px;
-    display: block;
-    text-transform: uppercase;
-  }
-  
-  /* Button */
-  .button, button {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 16px;
-    border-radius: 2px;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-  }
-  
-  .button:hover, button:hover {
-    opacity: 0.8;
-    font-weight: normal;
-  }
-  
-  .button:disabled, button:disabled {
-    opacity: 0.5;
-    cursor: auto;
-  }
-  
-  /* Fancy Button */
-  
-  .fancy-button {
-    background-color: white;
-    color: #1976d2;
-  }
-  
-  .fancy-button i.material-icons {
-    color: #1976d2;
-    padding-right: 4px;
+    opacity: 0.85;
   }
   
   /* Top Bar */
   
   app-top-bar {
     width: 100%;
-    height: 68px;
-    background-color: #1976d2;
-    padding: 16px;
+    height: 60px;
+    background-color: #161b22;
+    padding: 0 24px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   
   app-top-bar h1 {
-    color: white;
+    color: #e8eaf0;
     margin: 0;
   }
-  
-  /* Checkout Cart, Shipping Prices */
-  
-  .cart-item, .shipping-item {
-    width: 100%;
-    min-width: 400px;
-    max-width: 450px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 32px;
-    margin-bottom: 8px;
-    border-radius: 2px;
-    background-color: #EEEEEE;
+
+  app-top-bar a:hover {
+    opacity: 0.7;
+  }
+
+  app-top-bar a.active h1 {
+    color: #58a6ff;
+    border-bottom: 2px solid #58a6ff;
   }
   
-  
-  /*
-  Copyright Google LLC. All Rights Reserved.
-  Use of this source code is governed by an MIT-style license that
-  can be found in the LICENSE file at https://angular.io/license
-  */
 html, body { height: 100%; width: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  width: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; width: 100%; }

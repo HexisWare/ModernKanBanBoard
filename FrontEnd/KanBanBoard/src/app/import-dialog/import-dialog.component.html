@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Import Tasks</h2>
+<mat-dialog-content>
+  <p class="import-hint">Paste JSON below or upload a .json file. Tasks will be added to the backlog.</p>
+
+  <div class="file-upload">
+    <input type="file" accept=".json" (change)="onFileSelected($event)" #fileInput style="display:none">
+    <button mat-raised-button (click)="fileInput.click()">
+      <mat-icon>file_upload</mat-icon>
+      Choose File
+    </button>
+  </div>
+
+  <mat-form-field appearance="fill" class="json-input">
+    <mat-label>Paste JSON here</mat-label>
+    <textarea matInput [(ngModel)]="jsonText" rows="8" placeholder='[{"name":"Task 1","description":"Do thing","points":3}]'></textarea>
+  </mat-form-field>
+
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="importing || !jsonText" (click)="onImport()">
+    {{ importing ? 'Importing...' : 'Import' }}
+  </button>
+</mat-dialog-actions>

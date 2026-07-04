@@ -1,0 +1,38 @@
+.project-list-container {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.no-projects {
+  text-align: center;
+  padding: 60px;
+  color: #6e7681;
+  font-size: 18px;
+}
+
+.columns-wrapper {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.board-column {
+  flex: 1;
+  max-width: 500px;
+}
+
+.column-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #58a6ff;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #30363d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.project-card-wrapper {
+  margin-bottom: 0;
+}

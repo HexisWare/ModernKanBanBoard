@@ -1,17 +1,47 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <b>{{task.name}}</b>
-            {{task.date}}
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        {{task.description}}
-    </mat-card-content>
-    <mat-card-content>
-        {{task.points}}
-    </mat-card-content>
-    <mat-card-content>
-        {{task.state}}
-    </mat-card-content>
-  </mat-card>
+<mat-card class="task-card" (click)="toggleExpand()">
+  <div class="task-top-row">
+    <span class="task-name">{{ task.name }}</span>
+    <span class="task-state {{ getStateClass() }}">{{ getStateLabel() }}</span>
+    <button mat-icon-button class="delete-btn" (click)="onDeleteTask($event)">
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+  </div>
+  <div class="task-bottom-row">
+    <span class="task-priority-badge {{ getPriorityClass() }}">
+      <mat-icon class="priority-icon">{{ getPriorityIcon() }}</mat-icon>
+      {{ getPriorityLabel() }}
+    </span>
+    <span class="task-points">{{ task.points }} pts</span>
+    <span class="task-date" *ngIf="task.date">{{ task.date }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="priority-btn" (click)="onDecreasePriority(); $event.stopPropagation()">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <button mat-icon-button class="priority-btn" (click)="onIncreasePriority(); $event.stopPropagation()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <mat-icon class="expand-icon" *ngIf="!expanded">expand_more</mat-icon>
+    <mat-icon class="expand-icon" *ngIf="expanded">expand_less</mat-icon>
+  </div>
+
+  <div class="comments-section" *ngIf="expanded" (click)="$event.stopPropagation()">
+    <div class="comments-header">Comments</div>
+    <div *ngIf="loadingComments" class="comments-loading">Loading...</div>
+    <div *ngIf="!loadingComments && comments.length === 0" class="no-comments">No comments yet</div>
+    <div *ngFor="let comment of comments" class="comment-item">
+      <div class="comment-text">{{ comment.text }}</div>
+      <div class="comment-meta">
+        <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+        <button class="comment-delete" (click)="removeComment(comment.id, $event)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="add-comment-row">
+      <input type="text" class="comment-input" placeholder="Add a comment..." [(ngModel)]="newCommentText" (keyup.enter)="addComment()">
+      <button mat-icon-button color="primary" (click)="addComment()" [disabled]="!newCommentText.trim()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>
