@@ -10,6 +10,56 @@ html, body { height: 100%; width: 100%; }
   margin-bottom: 16px;
 }
 
+.ideas-section {
+  margin: 0 20px 16px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.ideas-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.ideas-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #ffab00;
+}
+
+.ideas-textarea {
+  width: 100%;
+  min-height: 60px;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #e8eaf0;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+}
+
+.ideas-textarea:focus {
+  border-color: #58a6ff;
+}
+
+.ideas-textarea::placeholder {
+  color: #6e7681;
+}
+
 .board-title {
   margin: 0;
   flex: 1;

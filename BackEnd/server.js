@@ -21,7 +21,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT, boardType TEXT DEFAULT \'project\', priority INTEGER DEFAULT 0, sortOrder INTEGER DEFAULT 0)');
+    db.run('CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT, boardType TEXT DEFAULT \'project\', priority INTEGER DEFAULT 0, sortOrder INTEGER DEFAULT 0, ideas TEXT)');
     db.run('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name TEXT, description TEXT, points INTEGER, date TEXT, doneDate TEXT, priority INTEGER DEFAULT 0, projectId INTEGER, state TEXT, FOREIGN KEY(projectId) REFERENCES projects(id))');
     db.run('CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY, taskId INTEGER, text TEXT, createdAt TEXT, FOREIGN KEY(taskId) REFERENCES tasks(id) ON DELETE CASCADE)');
 
@@ -37,6 +37,9 @@ db.serialize(() => {
       }
       if (!cols.includes('sortOrder')) {
         db.run('ALTER TABLE projects ADD COLUMN sortOrder INTEGER DEFAULT 0');
+      }
+      if (!cols.includes('ideas')) {
+        db.run('ALTER TABLE projects ADD COLUMN ideas TEXT');
       }
     });
 
@@ -110,6 +113,19 @@ db.serialize(() => {
       if (err) return res.status(400).json({ error: err.message });
       if (!row) return res.status(404).json({ error: 'Project not found' });
       res.json(row);
+    });
+  });
+
+  app.patch('/projects/:id/ideas', (req, res) => {
+    const projectId = req.params.id;
+    const { ideas } = req.body;
+    if (ideas === undefined || ideas === null) {
+      return res.status(400).json({ error: 'ideas field is required' });
+    }
+    db.run('UPDATE projects SET ideas = ? WHERE id = ?', [ideas, projectId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Project not found' });
+      res.json({ message: 'Ideas updated', id: projectId, ideas });
     });
   });
 

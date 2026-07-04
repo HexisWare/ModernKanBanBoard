@@ -73,6 +73,10 @@ export class ProjectService {
     return this.http.patch(`${this.apiUrl}/${projectId}/priority`, { priority });
   }
 
+  updateIdeas(projectId: number, ideas: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${projectId}/ideas`, { ideas });
+  }
+
   reorderProjects(orderedIds: number[]): Observable<any> {
     return this.http.patch(`${this.apiUrl}/reorder`, { orderedIds });
   }

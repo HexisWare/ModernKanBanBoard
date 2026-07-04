@@ -13,6 +13,14 @@
   </button>
 </div>
 
+<div class="ideas-section">
+  <div class="ideas-header">
+    <mat-icon class="ideas-icon">lightbulb_outline</mat-icon>
+    <span>Ideas</span>
+  </div>
+  <textarea class="ideas-textarea" [(ngModel)]="ideas" (ngModelChange)="onIdeasChange()" placeholder="Jot down ideas, notes, bullet points..."></textarea>
+</div>
+
 <!-- Project Board Swimlanes -->
 <div *ngIf="boardType === 'project'" class="columns-container" cdkDropListGroup>
   <div class="column" id="readyToWorkTasks" cdkDropList [cdkDropListData]="readyToWorkTasks" [cdkDropListConnectedTo]="allListIds" (cdkDropListDropped)="drop($event)">

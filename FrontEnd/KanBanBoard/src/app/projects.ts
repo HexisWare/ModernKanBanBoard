@@ -5,6 +5,7 @@ export interface Project {
     boardType?: string;
     priority?: number;
     sortOrder?: number;
+    ideas?: string;
   }
   
   //Placeholder if error

@@ -28,6 +28,8 @@ import { AddTaskDialogComponent } from './add-task-dialog/add-task-dialog.compon
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReportComponent } from './report/report.component';
 import { ImportDialogComponent } from './import-dialog/import-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -49,6 +51,8 @@ import { ImportDialogComponent } from './import-dialog/import-dialog.component';
     DragDropModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [
     AppComponent,

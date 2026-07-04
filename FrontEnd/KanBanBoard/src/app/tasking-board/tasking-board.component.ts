@@ -17,6 +17,8 @@ export class TaskingBoardComponent {
   projectId_: any;
   boardType: string = 'project';
   projectName: string = '';
+  ideas: string = '';
+  private ideasTimer: any;
 
   constructor(private router: Router, private projectService: ProjectService, public dialog: MatDialog) {
     const navigation = this.router.getCurrentNavigation();
@@ -45,6 +47,7 @@ export class TaskingBoardComponent {
         project => {
           this.boardType = project.boardType || 'project';
           this.projectName = project.name || '';
+          this.ideas = project.ideas || '';
           this.updateListIds();
           this.loadTasks();
         },
@@ -152,6 +155,20 @@ export class TaskingBoardComponent {
       () => this.loadTasks(),
       error => console.error('Error deleting task', error)
     );
+  }
+
+  onIdeasChange(): void {
+    if (this.ideasTimer) {
+      clearTimeout(this.ideasTimer);
+    }
+    this.ideasTimer = setTimeout(() => {
+      if (this.projectId_ && this.projectId_['key']) {
+        this.projectService.updateIdeas(this.projectId_['key'], this.ideas).subscribe(
+          () => {},
+          error => console.error('Error saving ideas', error)
+        );
+      }
+    }, 800);
   }
 
   drop(event: CdkDragDrop<Task[]>): void {
