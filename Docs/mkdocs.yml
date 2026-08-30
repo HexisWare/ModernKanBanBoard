@@ -1,0 +1,6 @@
+site_name: KanBanBoard
+site_url: https://example.com/
+nav:
+  - Document: index.md
+  - Concepts: concept.md
+theme: readthedocs
